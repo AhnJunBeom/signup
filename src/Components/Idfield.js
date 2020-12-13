@@ -9,24 +9,24 @@ class Idfield extends React.Component {
   }
 
   handleChange(e) {
-    this.props.valueChange(e.target.value);
+    this.props.valueChange('id', e.target.value);
     this.idValidCheck(e.target.value);
   }
 
   idValidCheck(input){
     if(input==='') {
-      this.props.validChange(false);
+      this.props.validChange('idValid', false);
     }
     else if(input==='ajb931010') {
-      this.props.validChange(false);
+      this.props.validChange('idValid', false);
     }
     else {
-      this.props.validChange(true);
+      this.props.validChange('idValid', true);
     }
   }
 
   renderValidMessage() {
-    if((this.props.valid === false) && (this.props.value !== '')) {
+    if((this.props.idValid === false) && (this.props.id !== '')) {
       return (
         <p>존재하는 ID입니다.</p>
       )
@@ -38,7 +38,7 @@ class Idfield extends React.Component {
       <div>
         <div>
           <label>
-            ID : <input type="text" value={this.props.value} onChange={this.handleChange} placeholder="ID를 입력하세요." />
+            ID : <input type="text" value={this.props.id} onChange={this.handleChange} placeholder="ID를 입력하세요." />
           </label>
         </div>
         <div>

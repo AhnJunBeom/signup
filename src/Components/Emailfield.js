@@ -11,24 +11,24 @@ class Emailfield extends React.Component {
   }
 
   handleChange(e) {
-    this.props.valueChange(e.target.value);
+    this.props.valueChange('email', e.target.value);
     this.emailValidCheck(e.target.value);
   }
 
   emailValidCheck(input){
     if(input==='') {
-      this.props.validChange(false);
+      this.props.validChange('emailValid', false);
     }
     else if((input.match('@') || []).length === 0) {
-      this.props.validChange(false);
+      this.props.validChange('emailValid',false);
     }
     else {
-      this.props.validChange(true);
+      this.props.validChange('emailValid',true);
     }
   }
 
   renderValidMessage() {
-    if((this.props.valid === false) && (this.props.value !== '')) {
+    if((this.props.emailvalid === false) && (this.props.email !== '')) {
       return (
         <p>형식이 잘못되었습니다.</p>
       )
@@ -39,7 +39,7 @@ class Emailfield extends React.Component {
       <div>
         <div>
           <label>
-            email : <input type="text" value={this.props.value} onChange={this.handleChange} placeholder="이메일을 입력하세요." />
+            email : <input type="text" value={this.props.email} onChange={this.handleChange} placeholder="이메일을 입력하세요." />
           </label>
         </div>
         <div>

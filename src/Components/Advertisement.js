@@ -1,16 +1,6 @@
 import React from 'react';
 
 class Advertisement extends React.Component {
- /* constructor(props) {
-    super(props);
-    this.state = {value: '', validation: false};
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(e) {
-    this.setState({value: e.target.value});
-  }*/
-
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -19,21 +9,21 @@ class Advertisement extends React.Component {
   }
 
   handleChange(e) {
-    this.props.valueChange(e.target.value);
+    this.props.valueChange('allowAd', e.target.value);
     this.adValidCheck(e.target.value);
   }
 
   adValidCheck(input){
     if(input==='') {
-      this.props.validChange(false);
+      this.props.validChange('adValid', false);
     }
     else {
-      this.props.validChange(true);
+      this.props.validChange('adValid', true);
     }
   }
 
   renderValidMessage() {
-    if(this.props.valid === false) {
+    if(this.props.adValid === false) {
       return (
         <p>광고 수신 여부를 선택해주세요.</p>
       )
