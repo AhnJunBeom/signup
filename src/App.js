@@ -11,6 +11,7 @@ class App extends React.Component {
       id : '',
       pw : '',
       name : '',
+      phoneNumber : '',
       email : '',
       allowAd : '',
       joinTime : ''
@@ -26,27 +27,13 @@ class App extends React.Component {
       <div>
           <BrowserRouter>
             <Route exact path="/" component={Home} />
-            <Route
-              path="/join"
-              render = {() =>
-                <Form
-                  id = {this.state.id}
-                  pw = {this.state.pw}
-                  name = {this.state.name}
-                  email = {this.state.email}
-                  joinTime = {this.state.joinTime}
-                  allowAd = {this.state.allowAd}
-                  valueChange = {this.valueChange} />}
-            />
-            <Route
-              path="/complete"
-              render = {() =>
-                <Complete
-                  id = {this.state.id}
-                  name = {this.state.name}
-                  email = {this.state.email}
-                  joinTime = {this.state.joinTime} />}
-            />
+            <Route path="/join">
+                <Form id = {this.state.id} pw = {this.state.pw} name = {this.state.name} phoneNumber={this.state.phoneNumber} email = {this.state.email}
+                      joinTime = {this.state.joinTime} allowAd = {this.state.allowAd} valueChange = {this.valueChange} />
+            </Route>
+            <Route path="/complete">
+                <Complete id = {this.state.id} name = {this.state.name} email = {this.state.email} joinTime = {this.state.joinTime} />
+            </Route>
           </BrowserRouter>
       </div>
     );

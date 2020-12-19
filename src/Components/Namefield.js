@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Namefield extends React.Component {
+class NameField extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -8,8 +8,9 @@ class Namefield extends React.Component {
   }
 
   handleChange(e) {
-    this.props.valueChange('name', e.target.value);
-    this.nameValidCheck(e.target.value);
+    const value = e.target.value;
+    this.props.valueChange('name', value);
+    this.nameValidCheck(value);
   }
 
   nameValidCheck(input){
@@ -34,4 +35,4 @@ class Namefield extends React.Component {
   }
 }
 
-export default Namefield;
+export default NameField;

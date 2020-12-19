@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Idfield extends React.Component {
+class IdField extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -9,8 +9,9 @@ class Idfield extends React.Component {
   }
 
   handleChange(e) {
-    this.props.valueChange('id', e.target.value);
-    this.idValidCheck(e.target.value);
+    const value = e.target.value;
+    this.props.valueChange('id', value);
+    this.idValidCheck(value);
   }
 
   idValidCheck(input){
@@ -49,4 +50,4 @@ class Idfield extends React.Component {
   }
 }
 
-export default Idfield;
+export default IdField;

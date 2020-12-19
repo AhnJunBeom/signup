@@ -1,21 +1,23 @@
 import React from 'react';
 
-class Pwfield extends React.Component {
+class PwField extends React.Component {
   constructor(props) {
     super(props);
     this.pwChange = this.pwChange.bind(this);
     this.pwValidCheck = this.pwValidCheck.bind(this);
     this.pwConfirmValidCheck = this.pwConfirmValidCheck.bind(this);
     this.renderValidMessage = this.renderValidMessage.bind(this);
+    this.renderValidMessagePwc = this.renderValidMessagePwc.bind(this);
   }
 
   pwChange(e) {
-    this.props.valueChange('pw', e.target.value);
-    this.pwValidCheck(e.target.value);
+    const value = e.target.value;
+    this.props.valueChange('pw', value);
+    this.pwValidCheck(value);
   }
 
   pwValidCheck(input){
-    if(input==='') {
+    if(input === '') {
       this.props.validChange('pwValid', false);
     }
     else if((input.length<8) || ((input.match(/[a-z]/g) || []).length === 0) || ((input.match(/[0-9]/g) || []).length === 0)) {
@@ -27,7 +29,11 @@ class Pwfield extends React.Component {
   }
 
   pwConfirmValidCheck(e){
-    if(e.target.value === this.props.pw) {
+    const value = e.target.value;
+    if(value === '') {
+      this.props.validChange('pwConfirmValid', null);
+    }
+    else if(value === this.props.pw) {
       this.props.validChange('pwConfirmValid', true);
     }
     else {
@@ -37,14 +43,20 @@ class Pwfield extends React.Component {
 
   renderValidMessage(value, valid) {
     if(value !== '') {
-        if(valid === true) {
-          return ('v');
-        }
-        else {
-          return ('x');
-        }
+      if(valid === true) {
+        return ('v');
+      }
+      else {
+        return ('x');
       }
     }
+  }
+  renderValidMessagePwc() {
+    if (this.props.pwConfirmValid !== null) {
+      if (this.props.pwConfirmValid === true) { return ('v'); }
+      else {return ('x');}
+    }
+  }
 
   render () {
     return (
@@ -59,10 +71,11 @@ class Pwfield extends React.Component {
           <label>
             pwc : <input type="password" onChange={this.pwConfirmValidCheck} placeholder="비밀번호 재입력" />
           </label>
+          {this.renderValidMessagePwc()}
         </div>
       </div>
     );
   }
 }
 
-export default Pwfield;
+export default PwField;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Emailfield extends React.Component {
+class EmailField extends React.Component {
 
 
   constructor(props) {
@@ -11,12 +11,13 @@ class Emailfield extends React.Component {
   }
 
   handleChange(e) {
-    this.props.valueChange('email', e.target.value);
-    this.emailValidCheck(e.target.value);
+    const value = e.target.value;
+    this.props.valueChange('email', value);
+    this.emailValidCheck(value);
   }
 
   emailValidCheck(input){
-    if(input==='') {
+    if(input === '') {
       this.props.validChange('emailValid', false);
     }
     else if((input.match('@') || []).length === 0) {
@@ -28,7 +29,7 @@ class Emailfield extends React.Component {
   }
 
   renderValidMessage() {
-    if((this.props.emailvalid === false) && (this.props.email !== '')) {
+    if((this.props.emailValid === false) && (this.props.email !== '')) {
       return (
         <p>형식이 잘못되었습니다.</p>
       )
@@ -50,4 +51,4 @@ class Emailfield extends React.Component {
   }
 }
 
-export default Emailfield;
+export default EmailField;

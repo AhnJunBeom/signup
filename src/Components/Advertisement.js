@@ -9,12 +9,13 @@ class Advertisement extends React.Component {
   }
 
   handleChange(e) {
-    this.props.valueChange('allowAd', e.target.value);
-    this.adValidCheck(e.target.value);
+    const value = e.target.value;
+    this.props.valueChange('allowAd', value);
+    this.adValidCheck(value);
   }
 
   adValidCheck(input){
-    if(input==='') {
+    if(input === '') {
       this.props.validChange('adValid', false);
     }
     else {
@@ -23,7 +24,7 @@ class Advertisement extends React.Component {
   }
 
   renderValidMessage() {
-    if(this.props.adValid === false) {
+    if(!this.props.adValid) {
       return (
         <p>광고 수신 여부를 선택해주세요.</p>
       )
