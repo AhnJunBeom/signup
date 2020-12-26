@@ -1,23 +1,36 @@
 import React from 'react';
 
-class Idfield extends React.Component {
+class IdField extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '', validation: false};
     this.handleChange = this.handleChange.bind(this);
-    this.idcheck = this.idcheck.bind(this);
+    this.idValidCheck = this.idValidCheck.bind(this);
+    this.renderValidMessage = this.renderValidMessage.bind(this);
   }
 
   handleChange(e) {
-    this.setState({value: e.target.value});
+    const value = e.target.value;
+    this.props.valueChange('id', value);
+    this.idValidCheck(value);
   }
 
-  idcheck(props){
-    if(props==='ajb931010') {
-      //this.setState({validation: false})
-      return(
-          <p>존재하는 ID입니다.</p>
-      );
+  idValidCheck(input){
+    if(input==='') {
+      this.props.validChange('idValid', false);
+    }
+    else if(input==='ajb931010') {
+      this.props.validChange('idValid', false);
+    }
+    else {
+      this.props.validChange('idValid', true);
+    }
+  }
+
+  renderValidMessage() {
+    if((this.props.idValid === false) && (this.props.id !== '')) {
+      return (
+        <p>존재하는 ID입니다.</p>
+      )
     }
   }
 
@@ -26,15 +39,15 @@ class Idfield extends React.Component {
       <div>
         <div>
           <label>
-            ID : <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="ID를 입력하세요." />
+            ID : <input type="text" value={this.props.id} onChange={this.handleChange} placeholder="ID를 입력하세요." />
           </label>
         </div>
         <div>
-          {this.idcheck(this.state.value)}
+          {this.renderValidMessage()}
         </div>
       </div>
     );
   }
 }
 
-export default Idfield;
+export default IdField;

@@ -1,26 +1,60 @@
 import React from 'react';
 
-class Pwfield extends React.Component {
+class PwField extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '', validation: true};
-    this.handleChange = this.handleChange.bind(this);
-    this.pwcheck = this.pwcheck.bind(this);
+    this.pwChange = this.pwChange.bind(this);
+    this.pwValidCheck = this.pwValidCheck.bind(this);
+    this.pwConfirmValidCheck = this.pwConfirmValidCheck.bind(this);
+    this.renderValidMessage = this.renderValidMessage.bind(this);
+    this.renderValidMessagePwc = this.renderValidMessagePwc.bind(this);
   }
 
-  handleChange(e) {
-    this.setState({value: e.target.value});
+  pwChange(e) {
+    const value = e.target.value;
+    this.props.valueChange('pw', value);
+    this.pwValidCheck(value);
   }
 
-  //비밀번호에, 영어, 숫자, 들어갈때 ok, validation : true
-  pwcheck(props){
-    if(props) {
-      if((props.length<8) || ((props.match(/[a-z]/g) || []).length === 0) || ((props.match(/[0-9]/g) || []).length === 0)) {
-        return(' X');
+  pwValidCheck(input){
+    if(input === '') {
+      this.props.validChange('pwValid', false);
+    }
+    else if((input.length<8) || ((input.match(/[a-z]/g) || []).length === 0) || ((input.match(/[0-9]/g) || []).length === 0)) {
+      this.props.validChange('pwValid', false);
+    }
+    else {
+      this.props.validChange('pwValid', true);
+    }
+  }
+
+  pwConfirmValidCheck(e){
+    const value = e.target.value;
+    if(value === '') {
+      this.props.validChange('pwConfirmValid', null);
+    }
+    else if(value === this.props.pw) {
+      this.props.validChange('pwConfirmValid', true);
+    }
+    else {
+      this.props.validChange('pwConfirmValid', false);
+    }
+  }
+
+  renderValidMessage(value, valid) {
+    if(value !== '') {
+      if(valid === true) {
+        return ('v');
       }
       else {
-        return(' V');
+        return ('x');
       }
+    }
+  }
+  renderValidMessagePwc() {
+    if (this.props.pwConfirmValid !== null) {
+      if (this.props.pwConfirmValid === true) { return ('v'); }
+      else {return ('x');}
     }
   }
 
@@ -29,13 +63,19 @@ class Pwfield extends React.Component {
       <div>
         <div>
           <label>
-            pw : <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="비밀번호를 입력하세요." />
+            pw : <input type="password" value={this.props.pw} onChange={this.pwChange} placeholder="비밀번호를 입력하세요." />
           </label>
-          {this.pwcheck(this.state.value)}
+          {this.renderValidMessage(this.props.pw, this.props.pwValid )}
+        </div>
+        <div>
+          <label>
+            pwc : <input type="password" onChange={this.pwConfirmValidCheck} placeholder="비밀번호 재입력" />
+          </label>
+          {this.renderValidMessagePwc()}
         </div>
       </div>
     );
   }
 }
 
-export default Pwfield;
+export default PwField;
