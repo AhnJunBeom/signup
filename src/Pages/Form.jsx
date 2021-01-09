@@ -5,12 +5,20 @@ import EmailField from '../Components/Emailfield';
 import NameField from '../Components/Namefield';
 import PhoneNumberField from '../Components/Phonenumberfield';
 import Advertisement from '../Components/Advertisement';
-import { Link } from 'react-router-dom';
+import { signUp } from "../Actions/Form";
+import { connect } from 'react-redux';
 
 class Form extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      id : '',
+      pw : '',
+      name : '',
+      phoneNumber : '',
+      email : '',
+      allowAd : '',
+      joinTime : '',
       idValid : false,
       pwValid : false,
       pwConfirmValid : null,
@@ -18,24 +26,24 @@ class Form extends React.Component {
       phoneNumberValid : false,
       emailValid : false,
       adValid : false,
-      confirmId : ''
+      confirmId : null
     }
-    this.validChange = this.validChange.bind(this);
+    this.valueChange = this.valueChange.bind(this);
     this.submitData = this.submitData.bind(this);
   }
-  validChange(key, value) {
+  valueChange(key, value) {
     this.setState({[key] : value});
   }
   submitData(e) {
     e.preventDefault();
     const date = new Date();
     const data = {
-        "id": this.props.id,
-        "password": this.props.pw,
-        "name": this.props.name,
-        "phoneAddress": this.props.phoneNumber,
-        "emailAddress": this.props.email,
-        "advertisement": this.props.allowAd
+        "id": this.state.id,
+        "password": this.state.pw,
+        "name": this.state.name,
+        "phoneAddress": this.state.phoneNumber,
+        "emailAddress": this.state.email,
+        "advertisement": this.state.allowAd
     }
 
     fetch('/signup/', {
@@ -45,9 +53,9 @@ class Form extends React.Component {
     })
     .then(response => {
       if(response.ok) {
-        console.log(response.status);
-        this.props.valueChange('joinTime', date.toLocaleString());
-        //Complete로 링크타는거 넣을거임
+        this.valueChange('joinTime', date.toLocaleString());
+        this.props.signUp(this.state);
+        this.props.history.push("/complete");
       }
       else if(response.status === 400) {
         alert("니문제임");
@@ -57,7 +65,7 @@ class Form extends React.Component {
   }
 
   render () {
-    const submitValid = (this.props.id === this.state.confirmId) && this.state.idValid && this.state.pwValid && this.state.phoneNumberValid && this.state.pwConfirmValid && this.state.nameValid && this.state.emailValid && this.state.adValid; 
+    const submitValid = (this.state.id === this.state.confirmId) && this.state.idValid && this.state.pwValid && this.state.phoneNumberValid && this.state.pwConfirmValid && this.state.nameValid && this.state.emailValid && this.state.adValid; 
     return (
       <div>
           <div>
@@ -65,12 +73,12 @@ class Form extends React.Component {
           </div>
           <form>
             <div>
-              <IdField confirmId={this.state.confirmId} id={this.props.id} idValid={this.state.idValid} validChange = {this.validChange} valueChange = {this.props.valueChange} />
-              <PwField pw={this.props.pw} pwValid={this.state.pwValid} pwConfirmValid={this.state.pwConfirmValid} validChange = {this.validChange} valueChange = {this.props.valueChange}/>
-              <NameField pw={this.props.pw} nameValid={this.state.nameValid} validChange = {this.validChange} valueChange = {this.props.valueChange}/>
-              <PhoneNumberField phoneNumber={this.props.phoneNumber} phoneNumberValid={this.state.phoneNumberValid} validChange = {this.validChange} valueChange = {this.props.valueChange} />
-              <EmailField email={this.props.email} emailValid={this.state.emailValid} validChange = {this.validChange} valueChange = {this.props.valueChange}/>
-              <Advertisement allowAd={this.props.allowAd} adValid={this.state.adValid} validChange = {this.validChange} valueChange = {this.props.valueChange}/>
+              <IdField confirmId={this.state.confirmId} id={this.state.id} idValid={this.state.idValid} valueChange = {this.valueChange} />
+              <PwField pw={this.state.pw} pwValid={this.state.pwValid} pwConfirmValid={this.state.pwConfirmValid} valueChange = {this.valueChange}/>
+              <NameField name={this.state.name} nameValid={this.state.nameValid} valueChange = {this.valueChange}/>
+              <PhoneNumberField phoneNumber={this.state.phoneNumber} phoneNumberValid={this.state.phoneNumberValid} valueChange = {this.valueChange} />
+              <EmailField email={this.state.email} emailValid={this.state.emailValid} valueChange = {this.valueChange}/>
+              <Advertisement allowAd={this.state.allowAd} adValid={this.state.adValid} valueChange = {this.valueChange}/>
           </div>
           <input type="submit" value="submit" disabled={!submitValid} onClick={this.submitData} />
         </form>
@@ -78,5 +86,20 @@ class Form extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  id: state.form.id,
+  pw: state.form.pw,
+  name: state.form.name,
+  phoneNumber: state.form.phoneNumber,
+  email: state.form.email,
+  allowAd: state.form.allowAd,
+  joinTime: state.form.joinTime
+});
 
-export default Form;
+const mapDispatchToProps = dispatch => ({
+  signUp: (userInformation) => {
+    dispatch(signUp(userInformation));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

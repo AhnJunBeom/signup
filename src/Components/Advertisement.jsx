@@ -16,10 +16,10 @@ class Advertisement extends React.Component {
 
   adValidCheck(input){
     if(input === '') {
-      this.props.validChange('adValid', false);
+      this.props.valueChange('adValid', false);
     }
     else {
-      this.props.validChange('adValid', true);
+      this.props.valueChange('adValid', true);
     }
   }
 

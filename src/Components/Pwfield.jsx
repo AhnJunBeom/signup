@@ -18,26 +18,26 @@ class PwField extends React.Component {
 
   pwValidCheck(input){
     if(input === '') {
-      this.props.validChange('pwValid', false);
+      this.props.valueChange('pwValid', false);
     }
     else if((input.length<8) || ((input.match(/[a-z]/g) || []).length === 0) || ((input.match(/[0-9]/g) || []).length === 0)) {
-      this.props.validChange('pwValid', false);
+      this.props.valueChange('pwValid', false);
     }
     else {
-      this.props.validChange('pwValid', true);
+      this.props.valueChange('pwValid', true);
     }
   }
 
   pwConfirmValidCheck(e){
     const value = e.target.value;
     if(value === '') {
-      this.props.validChange('pwConfirmValid', null);
+      this.props.valueChange('pwConfirmValid', null);
     }
     else if(value === this.props.pw) {
-      this.props.validChange('pwConfirmValid', true);
+      this.props.valueChange('pwConfirmValid', true);
     }
     else {
-      this.props.validChange('pwConfirmValid', false);
+      this.props.valueChange('pwConfirmValid', false);
     }
   }
 

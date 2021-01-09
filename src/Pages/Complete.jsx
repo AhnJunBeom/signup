@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Complete extends React.Component {
     render() {
@@ -19,4 +20,14 @@ class Complete extends React.Component {
     }
 }
 
-export default Complete;
+const mapStateToProps = state => ({
+    id: state.form.id,
+    pw: state.form.pw,
+    name: state.form.name,
+    phoneNumber: state.form.phoneNumber,
+    email: state.form.email,
+    allowAd: state.form.allowAd,
+    joinTime: state.form.joinTime
+  });
+
+export default connect(mapStateToProps)(Complete);

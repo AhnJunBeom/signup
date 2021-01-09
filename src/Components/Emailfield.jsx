@@ -18,13 +18,13 @@ class EmailField extends React.Component {
 
   emailValidCheck(input){
     if(input === '') {
-      this.props.validChange('emailValid', false);
+      this.props.valueChange('emailValid', false);
     }
     else if((input.match('@') || []).length === 0) {
-      this.props.validChange('emailValid',false);
+      this.props.valueChange('emailValid',false);
     }
     else {
-      this.props.validChange('emailValid',true);
+      this.props.valueChange('emailValid',true);
     }
   }
 
