@@ -65,7 +65,7 @@ class Form extends React.Component {
   }
 
   render () {
-    const submitValid = (this.state.id === this.state.confirmId) && this.state.idValid && this.state.pwValid && this.state.phoneNumberValid && this.state.pwConfirmValid && this.state.nameValid && this.state.emailValid && this.state.adValid; 
+    const submitValid = this.state.confirmId && this.state.idValid && this.state.pwValid && this.state.phoneNumberValid && this.state.pwConfirmValid && this.state.nameValid && this.state.emailValid && this.state.adValid; 
     return (
       <div>
           <div>
