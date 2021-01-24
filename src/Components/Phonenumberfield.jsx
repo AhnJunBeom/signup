@@ -18,10 +18,10 @@ class PhoneNumberField extends React.Component {
 
   phoneValidCheck(input){
     if(((input.match(/[0-9]/g) || []).length === 0)) {
-      this.props.validChange('phoneNumberValid', false);
+      this.props.valueChange('phoneNumberValid', false);
     }
     else {
-      this.props.validChange('phoneNumberValid', true);
+      this.props.valueChange('phoneNumberValid', true);
     }
   }
 

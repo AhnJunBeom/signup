@@ -15,10 +15,10 @@ class NameField extends React.Component {
 
   nameValidCheck(input){
     if(input==='') {
-      this.props.validChange('nameValid', false);
+      this.props.valueChange('nameValid', false);
     }
     else {
-      this.props.validChange('nameValid', true);
+      this.props.valueChange('nameValid', true);
     }
   }
 

@@ -11,6 +11,7 @@ class IdField extends React.Component {
   handleChange(e) {
     const value = e.target.value;
     this.props.valueChange('id', value);
+    this.props.valueChange('confirmId', null);
   }
 
   idConfirm(e) {
@@ -20,12 +21,12 @@ class IdField extends React.Component {
     .then(response => {
       console.log(response.ok);
       if(response.ok) {
-        this.props.validChange('confirmId', this.props.id);
-        this.props.validChange('idValid', true);
+        this.props.valueChange('confirmId', true);
+        this.props.valueChange('idValid', true);
       }
       else {
-        this.props.validChange('confirmId', this.props.id);
-        this.props.validChange('idValid', false);
+        this.props.valueChange('confirmId', false);
+        this.props.valueChange('idValid', false);
         alert("존재하는 ID입니다.");
       }
     })
@@ -33,8 +34,8 @@ class IdField extends React.Component {
   
   renderMessage() {
     if(this.props.id !== '') {
-      if(this.props.id !== this.props.confirmId) {return('중복확인을 해주세요');}
-      else if(this.props.idValid) {return('사용할 수 있는 ID입니다.');}
+      if(this.props.confirmId === null) {return('중복확인을 해주세요');}
+      else if(this.props.confirmId === true) {return('사용할 수 있는 ID입니다.');}
       else {return('사용이 불가능한 ID입니다.');}
     }
   }
