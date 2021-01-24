@@ -1,47 +1,39 @@
 import React from 'react';
 
-class PwField extends React.Component {
-  constructor(props) {
-    super(props);
-    this.pwChange = this.pwChange.bind(this);
-    this.pwValidCheck = this.pwValidCheck.bind(this);
-    this.pwConfirmValidCheck = this.pwConfirmValidCheck.bind(this);
-    this.renderValidMessage = this.renderValidMessage.bind(this);
-    this.renderValidMessagePwc = this.renderValidMessagePwc.bind(this);
-  }
+function PwField(props) {
 
-  pwChange(e) {
+  function pwChange(e) {
     const value = e.target.value;
-    this.props.valueChange('pw', value);
-    this.pwValidCheck(value);
+    props.valueChange(value);
+    pwValidCheck(value);
   }
 
-  pwValidCheck(input){
+  function pwValidCheck(input){
     if(input === '') {
-      this.props.valueChange('pwValid', false);
+      props.validChange(false);
     }
     else if((input.length<8) || ((input.match(/[a-z]/g) || []).length === 0) || ((input.match(/[0-9]/g) || []).length === 0)) {
-      this.props.valueChange('pwValid', false);
+      props.validChange(false);
     }
     else {
-      this.props.valueChange('pwValid', true);
+      props.validChange(true);
     }
   }
 
-  pwConfirmValidCheck(e){
+  function pwConfirmValidCheck(e){
     const value = e.target.value;
     if(value === '') {
-      this.props.valueChange('pwConfirmValid', null);
+      props.confirmPwChange(null);
     }
-    else if(value === this.props.pw) {
-      this.props.valueChange('pwConfirmValid', true);
+    else if(value === props.pw) {
+      props.confirmPwChange(true);
     }
     else {
-      this.props.valueChange('pwConfirmValid', false);
+      props.confirmPwChange(false);
     }
   }
 
-  renderValidMessage(value, valid) {
+  function renderValidMessage(value, valid) {
     if(value !== '') {
       if(valid === true) {
         return ('v');
@@ -51,31 +43,29 @@ class PwField extends React.Component {
       }
     }
   }
-  renderValidMessagePwc() {
-    if (this.props.pwConfirmValid !== null) {
-      if (this.props.pwConfirmValid === true) { return ('v'); }
+  function renderValidMessagePwc() {
+    if (props.pwConfirmValid !== null) {
+      if (props.pwConfirmValid === true) { return ('v'); }
       else {return ('x');}
     }
   }
 
-  render () {
     return (
       <div>
         <div>
           <label>
-            pw : <input type="password" value={this.props.pw} onChange={this.pwChange} placeholder="비밀번호를 입력하세요." />
+            pw : <input type="password" value={props.pw} onChange={pwChange} placeholder="비밀번호를 입력하세요." />
           </label>
-          {this.renderValidMessage(this.props.pw, this.props.pwValid )}
+          {renderValidMessage(props.pw, props.pwValid )}
         </div>
         <div>
           <label>
-            pwc : <input type="password" onChange={this.pwConfirmValidCheck} placeholder="비밀번호 재입력" />
+            pwc : <input type="password" onChange={pwConfirmValidCheck} placeholder="비밀번호 재입력" />
           </label>
-          {this.renderValidMessagePwc()}
+          {renderValidMessagePwc()}
         </div>
       </div>
     );
-  }
 }
 
 export default PwField;
