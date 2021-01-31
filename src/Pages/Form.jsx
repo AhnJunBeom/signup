@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import IdField from '../Components/Idfield';
 import PwField from '../Components/Pwfield';
 import EmailField from '../Components/Emailfield';
@@ -6,7 +6,7 @@ import NameField from '../Components/Namefield';
 import PhoneNumberField from '../Components/Phonenumberfield';
 import Advertisement from '../Components/Advertisement';
 import { signUp } from "../Actions/Form";
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 function Form(props) {
@@ -16,7 +16,6 @@ function Form(props) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [allowAd, setAllowAd] = useState('');
-  const [joinTime, setJoinTime] = useState('');
   const [idValid, setIdValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
   const [pwConfirmValid, setPwConfirmValid] = useState(null);
@@ -25,9 +24,9 @@ function Form(props) {
   const [emailValid, setEmailValid] = useState(false);
   const [adValid, setAdValid] = useState(false);
   const [confirmId, setConfirmId] = useState(false);
-
   const submitValid = confirmId && idValid && pwValid && phoneNumberValid && pwConfirmValid && nameValid && emailValid && adValid; 
   let history = useHistory();
+  const dispatch = useDispatch();
 
   function submitData(e) {
     e.preventDefault();
@@ -39,22 +38,23 @@ function Form(props) {
         "emailAddress": email,
         "advertisement": allowAd
     }
-    fetch('/signup/', {
+    fetch('http://ec2-18-221-142-60.us-east-2.compute.amazonaws.com:3000/signup/', {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data)
     })
     .then(response => {
-      if(response.ok) {
-        const date = new Date();
-        setJoinTime(date.toLocaleString());
-        props.signUp({id : id, name : name, email : email, joinTime : joinTime});
-        history.push("/complete");
-      }
-      else if(response.status === 400) {
+      if(response.status === 400) {
         alert("니문제임");
+        return;
       }
-      else {alert("서버 오류로 회원가입이 실패했습니다." + '\n' + "다시 시도해주세요.");}
+      else if(!response.ok) {
+        alert("서버 오류로 회원가입이 실패했습니다." + '\n' + "다시 시도해주세요.");
+        return;
+      }
+      const date = new Date();
+      dispatch(signUp({id : id, name : name, email : email, joinTime : date.toLocaleString()}));
+      history.push("/complete");
     })
   }
   
@@ -78,17 +78,4 @@ function Form(props) {
    );
 }
 
-const mapStateToProps = state => ({
-  id: state.form.id,
-  name: state.form.name,
-  email: state.form.email,
-  joinTime: state.form.joinTime
-});
-
-const mapDispatchToProps = dispatch => ({
-  signUp: (userInformation) => {
-    dispatch(signUp(userInformation));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default Form;

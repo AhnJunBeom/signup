@@ -4,10 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 function Complete(props) {
     let history = useHistory();
-    const id = useSelector(state => state.form.id);
-    const name = useSelector(state => state.form.name);
-    const email = useSelector(state => state.form.email);
-    const joinTime = useSelector(state => state.form.joinTime);
+    const { id, name, email, joinTime } = useSelector(state => state.form);
 
     function check() {
         history.push("/");

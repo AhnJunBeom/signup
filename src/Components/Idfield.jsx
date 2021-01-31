@@ -11,7 +11,7 @@ function IdField(props) {
 
   function idConfirm(e) {
     e.preventDefault();
-    const url = '/signup/id?id=' + props.id;
+    const url = 'http://ec2-18-221-142-60.us-east-2.compute.amazonaws.com:3000/signup/id?id=' + props.id;
     fetch(url, {method: "POST"})
     .then(response => {
       console.log(response.ok);
