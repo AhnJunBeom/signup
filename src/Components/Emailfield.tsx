@@ -1,14 +1,21 @@
 import React from 'react';
 
-function EmailField(props) {
+interface Props {
+  email: string,
+  emailValid: boolean,
+  valueChange: Function,
+  validChange: Function,
+}
 
-  function handleChange(e) {
+function EmailField(props: Props) {
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     props.valueChange( value);
     emailValidCheck(value);
   }
 
-  function emailValidCheck(input){
+  function emailValidCheck(input: string){
     if(input === '') {
       props.validChange(false);
     }

@@ -1,15 +1,24 @@
 import React from 'react';
 
-function IdField(props) {
+interface Props {
+  confirmId: boolean,
+  id: string,
+  idValid: boolean,
+  valueChange: Function,
+  validChange: Function,
+  confirmIdChange: Function
+}
 
-  function handleChange(e) {
+function IdField(props: Props) {
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     props.valueChange(value);
     props.confirmIdChange(null);
     props.validChange(false);
   }
 
-  function idConfirm(e) {
+  function idConfirm(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
     const url = 'http://ec2-18-221-142-60.us-east-2.compute.amazonaws.com:3000/signup/id?id=' + props.id;
     fetch(url, {method: "POST"})

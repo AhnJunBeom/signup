@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import {RootState} from '../Reducers';
 
-function Complete(props) {
+function Complete() {
     let history = useHistory();
-    const { id, name, email, joinTime } = useSelector(state => state.form);
+    const { id, name, email, joinTime } = useSelector((state: RootState) => state.form);
 
     function check() {
         history.push("/");

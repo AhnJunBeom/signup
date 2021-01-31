@@ -1,6 +1,13 @@
 import { SIGN_UP } from "../Constants/ActionTypes";
 
-export const signUp = (userInformation) => 
+interface UserInformation {
+  id: string,
+  name: string,
+  email: string,
+  joinTime: string
+}
+
+export const signUp = (userInformation : UserInformation) => 
   ({
     type: SIGN_UP,
     id: userInformation.id,

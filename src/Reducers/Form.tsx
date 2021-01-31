@@ -7,7 +7,15 @@ const initialState = {
     joinTime : ''
 }
 
-const form = (state = initialState, action) => {
+interface Action {
+    type: string,
+    id: string,
+    name: string,
+    email: string,
+    joinTime: string
+}
+
+const form = (state = initialState, action: Action) => {
     switch (action.type) {
         case SIGN_UP:
             return {
