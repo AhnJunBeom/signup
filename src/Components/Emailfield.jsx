@@ -1,54 +1,44 @@
 import React from 'react';
 
-class EmailField extends React.Component {
+function EmailField(props) {
 
-
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.emailValidCheck = this.emailValidCheck.bind(this);
-    this.renderValidMessage = this.renderValidMessage.bind(this);
-  }
-
-  handleChange(e) {
+  function handleChange(e) {
     const value = e.target.value;
-    this.props.valueChange('email', value);
-    this.emailValidCheck(value);
+    props.valueChange( value);
+    emailValidCheck(value);
   }
 
-  emailValidCheck(input){
+  function emailValidCheck(input){
     if(input === '') {
-      this.props.valueChange('emailValid', false);
+      props.validChange(false);
     }
     else if((input.match('@') || []).length === 0) {
-      this.props.valueChange('emailValid',false);
+      props.validChange(false);
     }
     else {
-      this.props.valueChange('emailValid',true);
+      props.validChange(true);
     }
   }
 
-  renderValidMessage() {
-    if((this.props.emailValid === false) && (this.props.email !== '')) {
+  function renderValidMessage() {
+    if((props.emailValid === false) && (props.email !== '')) {
       return (
         <p>형식이 잘못되었습니다.</p>
       )
     }
   }
-  render () {
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          <label>
-            email : <input type="text" value={this.props.email} onChange={this.handleChange} placeholder="이메일을 입력하세요." />
-          </label>
-        </div>
-        <div>
-          {this.renderValidMessage()}
-        </div>
+        <label>
+          email : <input type="text" value={props.email} onChange={handleChange} placeholder="이메일을 입력하세요." />
+        </label>
       </div>
-    );
-  }
+      <div>
+        {renderValidMessage()}
+      </div>
+    </div>
+  );
 }
 
 export default EmailField;
