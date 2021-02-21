@@ -1,14 +1,23 @@
 import React from 'react';
 
-function PwField(props) {
+interface Props {
+  pw: string,
+  pwValid: boolean,
+  pwConfirmValid: boolean | null,
+  valueChange: Function,
+  validChange: Function,
+  confirmPwChange: Function
+}
 
-  function pwChange(e) {
+function PwField(props: Props) {
+
+  function pwChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     props.valueChange(value);
     pwValidCheck(value);
   }
 
-  function pwValidCheck(input){
+  function pwValidCheck(input : string){
     if(input === '') {
       props.validChange(false);
     }
@@ -20,7 +29,7 @@ function PwField(props) {
     }
   }
 
-  function pwConfirmValidCheck(e){
+  function pwConfirmValidCheck(e: React.ChangeEvent<HTMLInputElement>){
     const value = e.target.value;
     if(value === '') {
       props.confirmPwChange(null);
@@ -33,7 +42,7 @@ function PwField(props) {
     }
   }
 
-  function renderValidMessage(value, valid) {
+  function renderValidMessage(value : string, valid : boolean) {
     if(value !== '') {
       if(valid === true) {
         return ('v');

@@ -9,7 +9,7 @@ import { signUp } from "../Actions/Form";
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-function Form(props) {
+function Form() {
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
   const [name, setName] = useState('');
@@ -18,17 +18,17 @@ function Form(props) {
   const [allowAd, setAllowAd] = useState('');
   const [idValid, setIdValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
-  const [pwConfirmValid, setPwConfirmValid] = useState(null);
+  const [pwConfirmValid, setPwConfirmValid] = useState<boolean | null>(null);
   const [nameValid, setNameValid] = useState(false);
   const [phoneNumberValid, setPhoneNumberValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
   const [adValid, setAdValid] = useState(false);
   const [confirmId, setConfirmId] = useState(false);
-  const submitValid = confirmId && idValid && pwValid && phoneNumberValid && pwConfirmValid && nameValid && emailValid && adValid; 
+  const submitValid: boolean | null = confirmId && idValid && pwValid && phoneNumberValid && pwConfirmValid && nameValid && emailValid && adValid; 
   let history = useHistory();
   const dispatch = useDispatch();
 
-  function submitData(e) {
+  function submitData(e: React.MouseEvent<HTMLInputElement, MouseEvent>) {
     e.preventDefault();
     const data = {
         "id": id,

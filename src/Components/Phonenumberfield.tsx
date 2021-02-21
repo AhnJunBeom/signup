@@ -1,8 +1,15 @@
 import React from 'react';
 
-function PhoneNumberField(props) {
+interface Props {
+  phoneNumber: string,
+  phoneNumberValid: boolean,
+  valueChange: Function,
+  validChange: Function,
+}
 
-  function handleChange(e) {
+function PhoneNumberField(props: Props) {
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     const re = /^[0-9\b]+$/;
     if (value === '' || re.test(value)) {
@@ -11,7 +18,7 @@ function PhoneNumberField(props) {
     phoneValidCheck(value);
   }
 
-  function phoneValidCheck(input){
+  function phoneValidCheck(input: string){
     if(((input.match(/[0-9]/g) || []).length === 0)) {
       props.validChange(false);
     }

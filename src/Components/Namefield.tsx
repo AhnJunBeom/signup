@@ -1,14 +1,21 @@
 import React from 'react';
 
-function NameField(props) {
+interface Props {
+  name: string,
+  nameValid: boolean,
+  valueChange: Function,
+  validChange: Function,
+}
 
-  function handleChange(e) {
+function NameField(props: Props) {
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     props.valueChange(value);
     nameValidCheck(value);
   }
 
-  function nameValidCheck(input){
+  function nameValidCheck(input: string){
     if(input==='') {
       props.validChange(false);
     }

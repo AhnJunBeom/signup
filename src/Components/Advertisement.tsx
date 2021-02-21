@@ -1,14 +1,21 @@
 import React from 'react';
 
-function Advertisement(props) {
+interface Props {
+  allowAd: string,
+  adValid: boolean,
+  valueChange: Function,
+  validChange: Function,
+}
 
-  function handleChange(e) {
+function Advertisement(props: Props) {
+
+  function handleChange(e: any) {
     const value = e.target.value;
     props.valueChange(value);
     adValidCheck(value);
   }
 
-  function adValidCheck(input){
+  function adValidCheck(input : string){
     if(input === '') {
       props.validChange(false);
     }
@@ -29,9 +36,9 @@ function Advertisement(props) {
     <div>
       <p>광고 메일을 수신하시겠습니까?</p>
       <input type="radio" id="yes" name="adAccess" value="yes" onClick={handleChange} />
-      <label for="yes">Yes</label>
+      <label htmlFor="yes">Yes</label>
       <input type="radio" id="no" name="adAccess" value="no" onClick={handleChange} />
-      <label for="no">No</label>
+      <label htmlFor="no">No</label>
       {renderValidMessage()}
     </div> 
   );
